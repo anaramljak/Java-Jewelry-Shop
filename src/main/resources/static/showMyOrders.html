@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/CSS/style.css">
+    <title>My orders</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" >
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto"></ul>
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/}" href="#">Home</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div>
+    <table class="table">
+        <thead class="thead-light">
+        <h2>Proizvodi</h2>
+        <tr>
+            <th scope="col">Sifra proizvoda</th>
+            <th scope="col">Ime proizvoda</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="product, iStat : ${orderProducts}">
+            <td th:text="${product.product.id}"></td>
+            <td th:text="${product.product.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead class="thead-light">
+        <h2>Personizirani proizvodi</h2>
+        <tr>
+            <th scope="col">Sifra proizvoda</th>
+            <th scope="col">Text proizvoda</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="product, iStat : ${orderPers}">
+            <td th:text="${product.personalizedJewelry.id}"></td>
+            <td th:text="${product.personalizedJewelry.text}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        Ukupno:
+        <a th:text="${order.total}"> </a>
+    </div>
+</div>
+
+</body>
+</html>

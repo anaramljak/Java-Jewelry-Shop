@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Registration</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Pocetna</a>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+<!-- Create HTML registration form -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div th:if="${param.noSuccess}">
+                <div class="alert alert-danger">Email already exists!</div>
+            </div>
+            <div th:if="${param.incorrectPassword}">
+                <div class="alert alert-danger">Password must be at least 6 characters</div>
+            </div>
+
+            <div th:if="${param.incorrectConfirmPassword}">
+                <div class="alert alert-danger">Confirm password don't match password</div>
+            </div>
+            <h1>Registracija</h1>
+
+            <form th:action="@{/registration}" immediate="true" method="post" th:object="${user}">
+                <div class="form-group">
+                    <label class="control-label" for="name"> Ime </label>
+                    <input id="name" class="form-control" th:field="*{name}"
+                           required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="surname"> Prezime </label> <input
+                        id="surname" class="form-control" th:field="*{surname}"
+                        required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="email"> Email </label> <input
+                        id="email" class="form-control" th:field="*{email}" required
+                        autofocus="autofocus" />
+
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="password"> Sifra </label> <input
+                        id="password" class="form-control" type="password"
+                        th:field="*{password}" required autofocus="autofocus" />
+                        <p th:each="error : ${#fields.errors('password')}"
+                         th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="password"> Potvrdi sifru </label> <input
+                        id="Confirmpassword" class="form-control" type="password"
+                        th:field="*{confirmPassword}" required autofocus="autofocus" />
+                    <p th:each="error : ${#fields.errors('confirmPassword')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" immediate="true" >Registriraj se</button>
+                    <span>Vec si registriran? <a href="/" th:href="@{/login}">Prijavi se</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

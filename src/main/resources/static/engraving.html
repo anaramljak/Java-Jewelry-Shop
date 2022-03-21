@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="/CSS/style.css">
+</head>
+<body>
+<div class="col-sm-9">
+    <div class="col-sm-3">
+        <h4>Categories</h4>
+        <ul class="list-group">
+            <a th:href="@{/shop}">
+                <li class="list-group-item">Svi proizvodi</li>
+            </a>
+            <a href="" th:each="category, iStat : ${categories}"
+               th:href="@{/engraving/category/{id}(id=${category.id})}">
+                <li
+                        class="list-group-item" th:text="${category.name}"></li>
+            </a>
+
+        </ul>
+    </div>
+    <div class="card" style="margin-top: 20px" th:each="product : ${products}">
+        <div class="row no-gutters">
+            <img class="" height="150px" width="150px" th:src="@{${'/productImages/' + product.imageName}}"
+                     th:alt="${product.name}">
+
+            <div class="col-sm-7 d-flex justify-content-center">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${product.name}"></h5>
+                    <h4><span th:text="${product.price}"></span>kn</h4>
+                    <a href="#" th:href="@{/personalized/engraving/{id}(id=${product.id})}" class="btn btn-primary" > Odaberi </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row col-sm-20" th:if="${totalPages > 1}">
+        <div class="col-sm-2">
+            Ukupno proizvoda: [[${totalItems}]]
+        </div>
+        <div>
+            <ul class="pagination pagination-sm no-margin pull-right">
+                <li class="col-sm-2">
+                    <a th:if="${currentPage  > 1}"
+                       th:href="@{'/engraving?pageNo=1' + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Prva</a>
+                    <span th:unless="${currentPage > 1}">Prva</span>
+                </li>
+
+                <li class="col-sm-2">
+                    <a th:if="${currentPage < totalPages}"
+                       th:href="@{'/engraving?pageNo=' + ${currentPage + 1}+ '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Sljedeća</a>
+                    <span th:unless="${currentPage < totalPages}">Sljedeća</span>
+                </li>
+
+                <li class="col-sm-2">
+                    <a th:if="${currentPage > 1}"
+                       th:href="@{'/engraving?pageNo=' + ${currentPage - 1}+ '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Prethodna</a>
+                    <span th:unless="${currentPage > 1}">Prethodna</span>
+                </li>
+                <li class="col-sm-2">
+                    <a th:if="${currentPage < totalPages}"
+                       th:href="@{'/engraving?pageNo=' + ${totalPages}+ '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Zadnja</a>
+                    <span th:unless="${currentPage < totalPages}">Zadnja</span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-2">
+            <select name="forma" onchange="javascript:handleSelect(this)">
+                <option>Sort by</option>
+                <option value="asc">od najniže cijene</option>
+                <option value="desc">od najviše</option>
+            </select>
+        </div>
+    </div>
+    </table>
+</div>
+
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+  function handleSelect(elm)
+  {
+     window.location = "/engraving?pageNo=1&sortField=price&sortDir=" + elm.value;
+  }
+
+
+
+</script>
